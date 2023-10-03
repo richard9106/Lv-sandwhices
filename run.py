@@ -151,11 +151,30 @@ def main():
     update_worksheet(sales_data,"sales")
     new_surplus_data = calculate_suplus_data(sales_data)
     update_worksheet(new_surplus_data, "surplus")
+
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_satock_data(sales_columns)
-    print (stock_data)
     update_worksheet(stock_data,"stock")
+
+    return stock_data
 
 
 print ("Welcome to Love Sandwhiches Data Automation")
-main()
+new_stock_data = main()
+# print (stock_data)
+
+def get_stock_values(data):
+    """
+    get the value of stock and creates a directorie
+    """
+    headings = SHEET.worksheet("stock").row_values(1)
+    result = {}
+    for heading, stock_value in  zip(headings, data):
+        result[heading] = stock_value
+
+    
+    return result
+
+stock_values = get_stock_values(new_stock_data)
+print (stock_values)
+
